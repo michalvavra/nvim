@@ -12,6 +12,7 @@
 
 | Key                                | Description                              | Mode | Plugin                           |
 | ---------------------------------- | ---------------------------------------- | ---- | -------------------------------- |
+| `gx`                               | Open link                                | `n`  | 
 | `<C-h>`, `<C-j>`, `<C-k>`, `<C-l>` | Go to left, bottom, top, or right window | `n`  | `christoomey/vim-tmux-navigator` |
 | `<leader>e`                        | File Explorer                            | `n`  | `echasnovski/mini.files`         |
 | `<leader>oh`                       | Find Help                                | `n`  | `echasnovski/mini.files`         |

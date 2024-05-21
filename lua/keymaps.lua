@@ -4,6 +4,9 @@ local mini_files = require('mini.files')
 local mini_bufremove = require('mini.bufremove')
 local mini_extra = require('mini.extra')
 
+require("mini.basics").setup()
+vim.g.mapleader = ' ' -- Use space as the one and only true Leader key
+
 -- Finding stuff
 keymap("n", "<leader>f", function() mini_pick.builtin.files() end, { noremap = true, silent = true, desc = 'Find File' })
 keymap("n", "<leader>e", function() mini_files.open(vim.api.nvim_buf_get_name(0)) end,
@@ -29,3 +32,4 @@ keymap("n", "<leader>cr", function() vim.lsp.buf.rename() end, { noremap = true,
 keymap("n", "<leader>ca", function() vim.lsp.buf.code_action() end,
     { noremap = true, silent = true, desc = 'Code Actions' })
 keymap("n", "<leader>cf", function() vim.lsp.buf.format() end, { noremap = true, silent = true, desc = 'Format Buffer' })
+keymap("v", "<leader>cf", function() vim.lsp.buf.format() end, { noremap = true, silent = true, desc = 'Format Selection' })

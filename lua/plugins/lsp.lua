@@ -1,5 +1,6 @@
 return {
     {
+        -- https://lsp-zero.netlify.app/
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
         lazy = true,
@@ -35,7 +36,7 @@ return {
             end)
 
             require('mason-lspconfig').setup({
-                ensure_installed = { 'lua_ls' },
+                ensure_installed = { 'lua_ls', 'pyright', 'biome', 'lexical' },
                 handlers = {
                     lsp_zero.default_setup,
                     lua_ls = function()
@@ -45,6 +46,9 @@ return {
                         require('lspconfig').lua_ls.setup({
                             settings = {
                                 Lua = {
+                                    format = {
+                                        enable = true
+                                    },
                                     diagnostics = {
                                         disable = { "lowercase-global", "undefined-global" }
                                     },
@@ -70,7 +74,7 @@ return {
         build = ":TSUpdate",
         config = function()
             require("nvim-treesitter.configs").setup({
-                -- ensure_installed = { "elixir", "heex" },
+                ensure_installed = { "bash", "html", "css", "toml", "yaml", "javascript", "typescript", "elixir", "heex" },
                 highlight = { enable = true },
                 indent = { enable = true },
                 incremental_selection = {
