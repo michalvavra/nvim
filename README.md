@@ -27,7 +27,7 @@ Plugins install on first start. Update them with `:lua vim.pack.update()`.
 
 ## Notes
 
-- **Theme**: [github-nvim-theme][github-theme] to match Rex's Merino theme (`github_dark_default`/`github_light`). Follows the terminal's light/dark appearance. Background is transparent to blend with Rex's translucent panes.
+- **Theme**: [github-nvim-theme][github-theme] to match [Rex][rex]'s Merino theme (`github_dark_default`/`github_light`). Follows the terminal's light/dark appearance. Background is transparent to blend with Rex's translucent panes.
 - **Habits**: [hardtime.nvim][hardtime] shows hints for better motions; `<Leader>oh` shows a report.
 - **Keylog**: daily logs in `stdpath('state')/keylog/` (Insert mode text is not recorded). `<Leader>ok` opens today's log, `:KeylogToggle` pauses it.
 - **Practice**: [vim-be-good][vim-be-good], run `:VimBeGood` in an empty buffer.
@@ -40,5 +40,6 @@ Plugins install on first start. Update them with `:lua vim.pack.update()`.
 [minimax]: https://github.com/nvim-mini/MiniMax
 [mini]: https://github.com/nvim-mini/mini.nvim
 [github-theme]: https://github.com/projekt0n/github-nvim-theme
+[rex]: https://www.superlogical.com/rex/
 [hardtime]: https://github.com/m4xshen/hardtime.nvim
 [vim-be-good]: https://github.com/ThePrimeagen/vim-be-good
