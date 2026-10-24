@@ -144,9 +144,7 @@ now_if_args(function()
   -- Install hints (servers must be on $PATH):
   -- - brew install lua-language-server yaml-language-server marksman taplo
   -- - mise use -g npm:typescript@latest  (TypeScript 7+, `tsc --lsp`)
-  -- - bun add -g vscode-langservers-extracted
-  --   bash-language-server @astrojs/language-server svelte-language-server
-  --   intelephense typescript
+  -- - bun add -g vscode-langservers-extracted bash-language-server intelephense
   -- - uv tool install ty ruff
   -- - rustup component add rust-analyzer
   -- - go install golang.org/x/tools/gopls@latest
@@ -156,7 +154,7 @@ now_if_args(function()
     'tsc',                            -- TypeScript / JavaScript (TS 7+ native)
     'jsonls', 'yamlls', 'taplo',      -- JSON / YAML / TOML
     'html', 'cssls',                  -- HTML / CSS
-    'astro', 'svelte', 'intelephense', -- Astro / Svelte / PHP
+    'intelephense',                   -- PHP
     'ty', 'ruff',                     -- Python (types / lint)
     'gopls',                          -- Go
     'rust_analyzer',                  -- Rust
