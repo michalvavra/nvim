@@ -38,7 +38,11 @@ local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
 -- Follows Rex's light/dark appearance via 'background' (auto-detected by Neovim).
 now(function()
   vim.pack.add({ 'https://github.com/projekt0n/github-nvim-theme' })
-  require('github-theme').setup({})
+  -- Transparent bg to match Rex's "blend theme" interface style: Rex draws panes
+  -- as translucent glass, but explicit cell backgrounds render opaque, so a solid
+  -- Normal bg looked darker than Rex. Unset bg lets Rex's background show through
+  -- (and keeps 'setup_termbg_sync()' from overriding Rex's light/dark bg).
+  require('github-theme').setup({ options = { transparent = true } })
 
   local apply_rex_theme = function()
     local name = vim.o.background == 'light' and 'github_light' or 'github_dark_default'
