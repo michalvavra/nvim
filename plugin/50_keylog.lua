@@ -28,7 +28,7 @@ local log_dir = vim.fn.stdpath('state') .. '/keylog'
 vim.fn.mkdir(log_dir, 'p')
 
 local Keylog = { enabled = true, lines = {} }
-_G.Config.keylog = Keylog
+Config.keylog = Keylog
 
 Keylog.get_path = function() return log_dir .. '/' .. os.date('%Y-%m-%d') .. '.log' end
 
