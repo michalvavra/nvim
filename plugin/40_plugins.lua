@@ -143,7 +143,8 @@ now_if_args(function()
   -- })
   -- Install hints (servers must be on $PATH):
   -- - brew install lua-language-server yaml-language-server marksman taplo
-  -- - bun add -g @typescript/native-preview vscode-langservers-extracted
+  -- - mise use -g npm:typescript@latest  (TypeScript 7+, `tsc --lsp`)
+  -- - bun add -g vscode-langservers-extracted
   --   bash-language-server @astrojs/language-server svelte-language-server
   --   intelephense typescript
   -- - uv tool install ty ruff
@@ -152,7 +153,7 @@ now_if_args(function()
   -- - `nushell` is built into `nu`
   vim.lsp.enable({
     'lua_ls',                         -- Lua
-    'tsgo',                           -- TypeScript / JavaScript
+    'tsc',                            -- TypeScript / JavaScript (TS 7+ native)
     'jsonls', 'yamlls', 'taplo',      -- JSON / YAML / TOML
     'html', 'cssls',                  -- HTML / CSS
     'astro', 'svelte', 'intelephense', -- Astro / Svelte / PHP
