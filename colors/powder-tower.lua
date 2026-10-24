@@ -1,1 +1,0 @@
-/Users/michal/Workspace/theme-powder-tower/nvim/powder-tower.lua
