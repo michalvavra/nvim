@@ -274,6 +274,10 @@ later(function()
   })
 end)
 
+-- 'ThePrimeagen/vim-be-good' is a game to practice Vim motions.
+-- Open an empty buffer and run `:VimBeGood` to pick a game.
+later(function() add({ 'https://github.com/ThePrimeagen/vim-be-good' }) end)
+
 -- Honorable mentions =========================================================
 
 -- 'mason-org/mason.nvim' (a.k.a. "Mason") is a great tool (package manager) for
