@@ -208,6 +208,20 @@ nmap_leader('mt', '<Cmd>lua MiniMap.toggle()<CR>',       'Toggle')
 
 -- o is for 'Other'. Common usage:
 -- - `<Leader>oz` - toggle between "zoomed" and regular view of current buffer
+-- Keystroke logs are created in 'plugin/50_keylog.lua'
+local keylog_today = function()
+  Config.keylog.flush()
+  vim.cmd.edit(Config.keylog.get_path())
+end
+local keylog_pick = function()
+  Config.keylog.flush()
+  local dir = vim.fn.stdpath('state') .. '/keylog'
+  MiniPick.builtin.files(nil, { source = { cwd = dir, name = 'Keylogs' } })
+end
+
+nmap_leader('oh', '<Cmd>Hardtime report<CR>',              'Hardtime report')
+nmap_leader('ok', keylog_today,                            'Keylog (today)')
+nmap_leader('oK', keylog_pick,                             'Keylogs (all)')
 nmap_leader('or', '<Cmd>lua MiniMisc.resize_window()<CR>', 'Resize to default width')
 nmap_leader('ot', '<Cmd>lua MiniTrailspace.trim()<CR>',    'Trim trailspace')
 nmap_leader('oz', '<Cmd>lua MiniMisc.zoom()<CR>',          'Zoom toggle')

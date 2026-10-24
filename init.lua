@@ -11,6 +11,7 @@
 -- ├── 20_keymaps.lua  Custom mappings
 -- ├── 30_mini.lua     MINI configuration
 -- ├── 40_plugins.lua  Plugins outside of MINI
+-- ├── 50_keylog.lua   Keystroke logging (for reviewing your Vim habits)
 -- ├ snippets/         User defined snippets (has demo file)
 -- ├ after/            Files to override behavior added by plugins
 -- ├── ftplugin/       Files for filetype behavior (has demo file)

@@ -34,7 +34,21 @@ local now_if_args = _G.Config.now_if_args
 -- - `:h mini.nvim-color-schemes` - list of other color schemes
 -- - `:h MiniHues-examples` - how to define highlighting with 'mini.hues'
 -- - 'plugin/40_plugins.lua' honorable mentions - other good color schemes
-now(function() vim.cmd('colorscheme miniwinter') end)
+-- Rex's "Merino" theme is GitHub's palette (Merino Dark == GitHub Dark Default,
+-- Merino Light == GitHub Light), so use 'github-nvim-theme' to match Rex.
+-- Follows Rex's light/dark appearance via 'background' (auto-detected by Neovim).
+now(function()
+  MiniDeps.add('projekt0n/github-nvim-theme')
+  require('github-theme').setup({})
+
+  local apply_rex_theme = function()
+    local name = vim.o.background == 'light' and 'github_light' or 'github_dark_default'
+    if vim.g.colors_name ~= name then vim.cmd('colorscheme ' .. name) end
+  end
+  apply_rex_theme()
+  -- Schedule: Neovim reloads the current scheme on 'background' change first
+  _G.Config.new_autocmd('OptionSet', 'background', vim.schedule_wrap(apply_rex_theme), 'Match Rex light/dark theme')
+end)
 
 -- You can try these other 'mini.hues'-based color schemes (uncomment with `gcc`):
 -- now(function() vim.cmd('colorscheme minispring') end)

@@ -55,6 +55,10 @@ now_if_args(function()
     -- - Execute `:=require('nvim-treesitter').get_available()`
     -- - Visit 'SUPPORTED_LANGUAGES.md' file at
     --   https://github.com/nvim-treesitter/nvim-treesitter/blob/main
+    'javascript',
+    'typescript',
+    'python',
+    'go',
   }
   local isnt_installed = function(lang)
     return #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) == 0
@@ -98,6 +102,7 @@ now_if_args(function()
   -- vim.lsp.enable({
   --   -- For example, if `lua-language-server` is installed, use `'lua_ls'` entry
   -- })
+  vim.lsp.enable({ 'lua_ls', 'json_ls', 'tsgo', 'gopls' })
 end)
 
 -- Formatting =================================================================
@@ -115,10 +120,36 @@ later(function()
   -- - `:h Conform`
   -- - `:h conform-options`
   -- - `:h conform-formatters`
+  -- oxfmt (Prettier-compatible, from oxc): `bun add -g oxfmt`
+  -- Respects project `.oxfmtrc.json` if present.
+  local oxfmt = { 'oxfmt' }
+
   require('conform').setup({
     -- Map of filetype to formatters
     -- Make sure that necessary CLI tool is available
-    -- formatters_by_ft = { lua = { 'stylua' } },
+    formatters_by_ft = {
+      go = { 'goimports', 'gofmt' },
+      -- Python: ruff (`uv tool install ruff`) - sort imports, then format
+      python = { 'ruff_organize_imports', 'ruff_format' },
+      -- Web & data files: oxfmt
+      javascript = oxfmt,
+      javascriptreact = oxfmt,
+      typescript = oxfmt,
+      typescriptreact = oxfmt,
+      json = oxfmt,
+      jsonc = oxfmt,
+      html = oxfmt,
+      vue = oxfmt,
+      css = oxfmt,
+      scss = oxfmt,
+      less = oxfmt,
+      markdown = oxfmt,
+      yaml = oxfmt,
+      toml = oxfmt,
+      graphql = oxfmt,
+    },
+    -- Format on save; fall back to LSP when no formatter is configured
+    format_on_save = { timeout_ms = 1000, lsp_format = 'fallback' },
   })
 end)
 
@@ -132,6 +163,48 @@ end)
 -- 'mini.snippets' is designed to work with it as seamlessly as possible.
 -- See `:h MiniSnippets.gen_loader.from_lang()`.
 later(function() add('rafamadriz/friendly-snippets') end)
+
+-- Learning Vim motions =======================================================
+
+-- 'm4xshen/hardtime.nvim' helps to break bad habits: blocks repeating `hjkl`
+-- too often, shows hints for better motions (like `A` instead of `$a`), and
+-- keeps track of them. Hints are shown via `vim.notify()` ('mini.notify').
+-- Example usage:
+-- - `<Leader>oh` - show report of your most common bad habits
+-- - `:Hardtime toggle` - temporarily disable/enable
+-- - `<Leader>en` - see notification history (includes past hints)
+--
+-- See also 'plugin/50_keylog.lua' for full keystroke logging.
+later(function()
+  -- 'nui.nvim' is used for `:Hardtime report` window
+  add({ source = 'm4xshen/hardtime.nvim', depends = { 'MunifTanjim/nui.nvim' } })
+
+  require('hardtime').setup({
+    -- Only show hints instead of blocking. Change to 'block' for a harder mode.
+    restriction_mode = 'hint',
+    -- Keep mouse working (for 'mini.files', 'mini.map', etc.)
+    disable_mouse = false,
+    restricted_keys = {
+      -- `<C-M>` is `<CR>` which starts 'mini.jump2d' jumping
+      ['<C-M>'] = false,
+    },
+    disabled_keys = {
+      -- Disable arrows only in Normal/Visual mode. In Insert mode they are used
+      -- by `<M-hjkl>` mappings from 'mini.basics'.
+      ['<Up>'] = { 'n', 'x' },
+      ['<Down>'] = { 'n', 'x' },
+      ['<Left>'] = { 'n', 'x' },
+      ['<Right>'] = { 'n', 'x' },
+    },
+    disabled_filetypes = {
+      -- All 'mini.nvim' special buffers ('ministarter', 'minipick', etc.)
+      ['mini.*'] = true,
+      -- 'mini.git' output buffers
+      git = true,
+      diff = true,
+    },
+  })
+end)
 
 -- Honorable mentions =========================================================
 
