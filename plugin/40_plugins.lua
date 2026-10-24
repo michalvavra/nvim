@@ -60,11 +60,41 @@ now_if_args(function()
     -- - Execute `:=require('nvim-treesitter').get_available()`
     -- - Visit 'SUPPORTED_LANGUAGES.md' file at
     --   https://github.com/nvim-treesitter/nvim-treesitter/blob/main
+    'markdown_inline',
+    'luadoc',
+    'vim',
+    'query',
+    -- Web
     'javascript',
     'typescript',
     'tsx',
+    'jsdoc',
+    'html',
+    'css',
+    'astro',
+    'svelte',
+    'php',
+    -- Data / config
+    'json',
+    'yaml',
+    'toml',
+    'sql',
+    -- Systems / scripting
     'python',
     'go',
+    'gomod',
+    'gosum',
+    'rust',
+    'bash',
+    'nu',
+    -- Git & misc
+    'diff',
+    'gitcommit',
+    'git_rebase',
+    'gitignore',
+    'dockerfile',
+    'make',
+    'regex',
   }
   local isnt_installed = function(lang)
     return #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) == 0
@@ -111,7 +141,28 @@ now_if_args(function()
   -- vim.lsp.enable({
   --   -- For example, if `lua-language-server` is installed, use `'lua_ls'` entry
   -- })
-  vim.lsp.enable({ 'lua_ls', 'json_ls', 'tsgo', 'gopls' })
+  -- Install hints (servers must be on $PATH):
+  -- - brew install lua-language-server yaml-language-server marksman taplo
+  -- - bun add -g @typescript/native-preview vscode-langservers-extracted
+  --   bash-language-server @astrojs/language-server svelte-language-server
+  --   intelephense typescript
+  -- - uv tool install ty ruff
+  -- - rustup component add rust-analyzer
+  -- - go install golang.org/x/tools/gopls@latest
+  -- - `nushell` is built into `nu`
+  vim.lsp.enable({
+    'lua_ls',                         -- Lua
+    'tsgo',                           -- TypeScript / JavaScript
+    'jsonls', 'yamlls', 'taplo',      -- JSON / YAML / TOML
+    'html', 'cssls',                  -- HTML / CSS
+    'astro', 'svelte', 'intelephense', -- Astro / Svelte / PHP
+    'ty', 'ruff',                     -- Python (types / lint)
+    'gopls',                          -- Go
+    'rust_analyzer',                  -- Rust
+    'bashls',                         -- Bash / sh (uses shellcheck)
+    'nushell',                        -- Nushell
+    'marksman',                       -- Markdown
+  })
 end)
 
 -- Formatting =================================================================
@@ -141,7 +192,11 @@ later(function()
     -- Map of filetype to formatters
     -- Make sure that necessary CLI tool is available
     formatters_by_ft = {
-      go = { 'goimports', 'gofmt' },
+      go = { 'goimports', 'gofumpt' },
+      lua = { 'stylua' },
+      rust = { 'rustfmt' },
+      sh = { 'shfmt' },
+      bash = { 'shfmt' },
       -- Python: ruff (`uv tool install ruff`) - sort imports, then format
       python = { 'ruff_organize_imports', 'ruff_format' },
       -- Web & data files: oxfmt
