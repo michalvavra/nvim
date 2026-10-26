@@ -277,32 +277,9 @@ end)
 -- Only active inside Rex (`REX_SESSION` and `REX_BLOCK` set), otherwise
 -- 'mini.basics' window mappings are used. Rex side is loaded from
 -- `~/.config/rex/init.lua` via `dofile()` of this plugin's `rex/rex-splits.lua`.
---
--- Mappings are defined here instead of by the plugin, so `<C-hjkl>` does
--- nothing inside floating windows. Leaving a float closes popups like
--- 'mini.files'. Outside Rex `navigate()` only runs `wincmd`.
 later(function()
   add({ 'https://github.com/theboxer/nvim-rex' })
-  local rex_splits = require('rex-splits')
-  rex_splits.setup({ mappings = false })
-
-  local is_float_window = function() return vim.api.nvim_win_get_config(0).relative ~= '' end
-  local navigate_unless_float = function(direction)
-    if is_float_window() then return end
-    rex_splits.navigate(direction)
-  end
-
-  for key, direction in pairs({ h = 'left', j = 'down', k = 'up', l = 'right' }) do
-    local lhs = '<C-' .. key .. '>'
-    local desc = 'Navigate ' .. direction .. ' (Neovim/Rex, not in floats)'
-    vim.keymap.set('n', lhs, function() navigate_unless_float(direction) end, { desc = desc })
-    -- In a floating terminal pass the key to the program instead
-    local term_navigate = function()
-      if is_float_window() then return lhs end
-      return "<C-\\><C-n><Cmd>lua require('rex-splits').navigate('" .. direction .. "')<CR>"
-    end
-    vim.keymap.set('t', lhs, term_navigate, { expr = true, desc = desc })
-  end
+  require('rex-splits').setup()
 end)
 
 -- 'ThePrimeagen/vim-be-good' is a game to practice Vim motions.
