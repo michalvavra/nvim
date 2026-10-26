@@ -273,6 +273,15 @@ later(function()
   })
 end)
 
+-- 'theboxer/nvim-rex' makes `<C-hjkl>` cross from Neovim windows into Rex panes.
+-- Only active inside Rex (`REX_SESSION` and `REX_BLOCK` set), otherwise
+-- 'mini.basics' window mappings are used. Rex side is loaded from
+-- `~/.config/rex/init.lua` via `dofile()` of this plugin's `rex/rex-splits.lua`.
+later(function()
+  add({ 'https://github.com/theboxer/nvim-rex' })
+  require('rex-splits').setup()
+end)
+
 -- 'ThePrimeagen/vim-be-good' is a game to practice Vim motions.
 -- Open an empty buffer and run `:VimBeGood` to pick a game.
 later(function() add({ 'https://github.com/ThePrimeagen/vim-be-good' }) end)
